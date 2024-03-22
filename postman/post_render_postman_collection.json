@@ -1,0 +1,130 @@
+{
+	"info": {
+		"_postman_id": "c5bd2dbd-3399-4e30-87d2-0cf6663c509f",
+		"name": "post - render",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9826030"
+	},
+	"item": [
+		{
+			"name": "取得所有貼文",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://node-mongoose.onrender.com/posts",
+					"protocol": "https",
+					"host": [
+						"node-mongoose",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "新增單筆貼文",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"測試貼文二\",\n    \"image\": \"https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=2043&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D\",\n    \"content\": \"貼文內容二\",\n    \"type\": \"person\",\n    \"tags\": [\"測試222\",\"333\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://node-mongoose.onrender.com/posts",
+					"protocol": "https",
+					"host": [
+						"node-mongoose",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "編輯單筆貼文",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"標題調整333\",\n    \"content\": \"更改內容333～\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://node-mongoose.onrender.com/posts/65fd6d4c1c5c6e8f3eaee0b1",
+					"protocol": "https",
+					"host": [
+						"node-mongoose",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"posts",
+						"65fd6d4c1c5c6e8f3eaee0b1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "刪除單筆貼文",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://node-mongoose.onrender.com/posts/65fd6d4c1c5c6e8f3eaee0b1",
+					"protocol": "https",
+					"host": [
+						"node-mongoose",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"posts",
+						"65fd6d4c1c5c6e8f3eaee0b1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "刪除所有貼文",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://node-mongoose.onrender.com/posts",
+					"protocol": "https",
+					"host": [
+						"node-mongoose",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
