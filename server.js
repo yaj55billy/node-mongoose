@@ -24,25 +24,28 @@ const requestListener = async(req, res) => {
     body+=chunk;
   })
 
-  if(req.url === "/posts" && req.method === "GET"){
+  if(req.url === "/posts" && req.method === "GET") {
     const posts = await Post.find(); 
     successHandle(res, posts);
-  } else if(req.url === "/posts" && req.method === "POST"){
+  } else if(req.url === "/posts" && req.method === "POST") {
     req.on('end', async() => {
       try{
         const data = JSON.parse(body); 
-        if(data.content !== undefined){          
-          const newPost = await Post.create({
-            name: data.name,
-            image: data.image,
-            content: data.content,
-            type: data.type,
-            tags: data.tags
-          });
-          successHandle(res, newPost);
-        } else {
+
+        if(data.content === undefined) {
           errorHandle(res);
+          return;
         }
+
+        const newPost = await Post.create({
+          name: data.name,
+          image: data.image,
+          content: data.content,
+          type: data.type,
+          tags: data.tags
+        });
+        successHandle(res, newPost);
+
       } catch(error) {
         errorHandle(res, error);
       }
@@ -52,35 +55,38 @@ const requestListener = async(req, res) => {
       try{
         const data = JSON.parse(body); 
         const id = req.url.split('/').pop();
-        if(data.content !== undefined){     
-          const editContent = {
-            name: data.name,
-            image: data.image,
-            content: data.content,
-            type: data.type,
-            tags: data.tags
-          };     
-          const editPost = await Post.findByIdAndUpdate(id, editContent);
-          successHandle(res, editPost);
-        } else {
+
+        if(data.content === undefined) {
           errorHandle(res);
+          return;
         }
+
+        const editContent = {
+          name: data.name,
+          image: data.image,
+          content: data.content,
+          type: data.type,
+          tags: data.tags
+        };
+        const editPost = await Post.findByIdAndUpdate(id, editContent, { returnDocument: 'after' });
+        editPost ? successHandle(res, editPost) : errorHandle(res);
+
       } catch(error) {
         errorHandle(res, error);
       }
     })
-  } else if(req.url.startsWith("/posts/") && req.method ==="DELETE"){
+  } else if(req.url.startsWith("/posts/") && req.method ==="DELETE") {
     const id = req.url.split('/').pop();
-    await Post.findByIdAndDelete(id);
-    successHandle(res, null);
+    const deletePost = await Post.findByIdAndDelete(id);
+    deletePost ? successHandle(res, null) : errorHandle(res);
+    
   } else if(req.url === "/posts" && req.method ==="DELETE") {
     const posts = await Post.deleteMany({}); 
     successHandle(res, posts);
-  }
-  else if(req.method === "OPTIONS"){
+  } else if(req.method === "OPTIONS") {
     res.writeHead(200, headers);
     res.end();
-  }else{
+  } else {
     res.writeHead(404, headers);
     res.write(JSON.stringify({
       "status": "false",
